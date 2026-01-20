@@ -1,8 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"); /* Poppins */
+
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+@layer components {
+  .box-dashboard {
+    @apply flex flex-row items-center gap-3 border p-5 justify-center rounded-2xl cursor-pointer w-[260px] text-black;
+  }
+  /* Form Module */
+    .input {
+    @apply outline-none border border-2 border-[#4C72BD] rounded-md px-2 py-1 text-slate-500 w-full focus:border-blue-300;
+  }
+
+  /* Modal Module */
+  .tittle {
+    @apply m-0 text-[1rem] font-bold text-black
+  }
+
+  /* On Boarding */ 
+  .img-onboarding {
+    @apply w-52 h-52 mb-5
+  }
+  .container-onboarding {
+    @apply flex flex-row items-center justify-center h-full gap-5
+  }
+  .tittle-onboarding {
+    @apply text-4xl font-bold text-[#39568E] mb-2 mt-5
+  }
+  .subtitle-onboarding {
+    @apply text-lg text-[#4C72BD99]/80
+  } 
+}
+
+@theme {
+  --font-poppins: "Poppins", sans-serif;
 }
 
 @theme inline {
