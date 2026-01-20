@@ -11,7 +11,7 @@ type failedLoginProps = {
   onClose?: () => void;       // klik overlay / tekan ESC
 };
 
-export default function failedLogin({
+export default function FailedLogin({
   open,
   title = "FAILED",
   message = "Login failed, please try again!",
