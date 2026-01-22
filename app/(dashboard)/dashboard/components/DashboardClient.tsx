@@ -2,28 +2,29 @@
 
 import { useState } from "react";
 // Add Schedule
-import Modal from "./components/add-jadwal/modal";
-import CreateScheduleCard from "./components/add-jadwal/CreateScheduleCard";
-import CreateScheduleModal from "./components/add-jadwal/CreateScheduleModal";
+import Modal from "./add-jadwal/modal";
+import CreateScheduleCard from "./add-jadwal/CreateScheduleCard";
+import CreateScheduleModal from "./add-jadwal/CreateScheduleModal";
 
 // Add User
-import ChooseUserDialog from "./components/add-user/ChooseUserDialog";
-import SiswaForm from "./components/add-user/siswaForm";
-import AdminForm from "./components/add-user/adminForm";
+import ChooseUserDialog from "./add-user/ChooseUserDialog";
+import SiswaForm from "./add-user/siswaForm";
+import AdminForm from "./add-user/adminForm";
+
 // Variable for Form Add User
 type Step = "closed" | "choose" | "form-siswa" | "form-admin";
 type UserType = "siswa" | "admin";
 
-export default function DashboardPage() {
+export default async function DashboardClient({ user }: { user: any }) {
 
 
-  // Add User Function
+  // Add User Function & Modal
   const [step, setStep] = useState<Step>("closed");
 
   const openChoose = () => setStep("choose");
   const closeAll = () => setStep("closed");
   const backToChoose = () => setStep("choose");
-
+  
   const goForm = (type: UserType) => {
     setStep(type === "siswa" ? "form-siswa" : "form-admin");
   };
@@ -39,6 +40,7 @@ export default function DashboardPage() {
   return (
     <>
       <div className="flex flex-col">
+        <pre>{JSON.stringify(user, null, 2)}</pre>
         <div className="grid grid-cols-[1fr_auto_auto] items-center gap-6 gap-3">
           {/* Tittle */}
           <div className="flex items-center">
@@ -78,27 +80,27 @@ export default function DashboardPage() {
             <Modal open={isOpen} title={title} onClose={closeAll}>
               {step === "choose" && <ChooseUserDialog onPick={goForm} />}
 
+              {/* Form Siswa */}
               {step === "form-siswa" && (
                 <SiswaForm
                   onBack={backToChoose}
                   onSubmit={(data) => {
                     console.log("SUBMIT SISWA:", data);
-                    alert(
+                    alert();
                     //   `Siswa tersimpan:\nNama: ${data.nama}\nNIS: ${data.nis}`,
-                    );
                     closeAll();
                   }}
                 />
               )}
 
+              {/* Form Admin */}
               {step === "form-admin" && (
                 <AdminForm
                   onBack={backToChoose}
                   onSubmit={(data) => {
                     console.log("SUBMIT ADMIN:", data);
-                    alert(
+                    alert();
                     //   `Admin tersimpan:\nEmail: ${data.email}\nRole: ${data.role}`,
-                    );
                     closeAll();
                   }}
                 />

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
+import ButtonLogout from "../components/buttonLogout";
+
 type NavItem = { label: string; href: string };
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
@@ -128,7 +130,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
         {/* Optional footer */}
         <div className="absolute bottom-0 w-full border-t p-4 text-xs text-black cursor-pointer">
-          {/* <ButtonLogout /> */}
+          <ButtonLogout />
         </div>
       </aside>
 

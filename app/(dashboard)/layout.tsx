@@ -1,12 +1,13 @@
 import AppShell from "./AppShell";
 
-export default function DashboardLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-      <AppShell>{children}</AppShell>
-
+    <html lang="en">
+      <body><AppShell>{children}</AppShell></body>
+    </html>
   );
 }

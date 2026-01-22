@@ -1,57 +1,54 @@
 "use client";
 
+// Login System
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
+// Modal Login
 import FailedLogin from "@/app/components/failedLogin";
 import ForgotPassword from "@/app/components/forgotPassword";
 
 export default function LoginForm() {
-  // const router = useRouter();
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState<string | null>(null);
+  // Variable System
+    const router = useRouter();
 
-  // const onSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setError(null);
-  //   setLoading(true);
-
-  //   try {
-  //     const res = await fetch("/api/auth/login", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ username, password }),
-  //     });
-
-  //     if (!res.ok) {
-  //       const data = await res.json().catch(() => ({}));
-  //       // tampilkan modal
-  //       setFailedMsg(data?.error ?? "Login gagal");
-  //       setFailedOpen(true);
-  //       return;
-  //     }
-
-  //     const data = (await res.json()) as { token: string };
-  //     sessionStorage.setItem(authStorageKeys.TOKEN_KEY, data.token);
-  //     sessionStorage.setItem(
-  //       authStorageKeys.LAST_ACTIVITY_KEY,
-  //       String(Date.now())
-  //     );
-
-  //     router.replace("/dashboard");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+    // Variable Modal
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [failedOpen, setFailedOpen] = useState(false);
   const [failedMsg, setFailedMsg] = useState("");
 
-  const router = useRouter();
 
 
-  
+  // Login Functiob
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+
+  async function handleSubmit() {
+    setLoading(true);
+    setError("");
+
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+        // tampilkan modal
+        setFailedMsg(data?.error ?? "Login gagal");
+        setFailedOpen(true);
+        return;
+    }
+
+    router.push("/dashboard");
+  }
+
+
+
   return (
     <>
       <div className="w-80 rounded-lg shadow h-auto p-6 bg-white relative overflow-hidden">
@@ -72,6 +69,8 @@ export default function LoginForm() {
               id="identifier"
               name="identifier"
               type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div>
@@ -81,6 +80,8 @@ export default function LoginForm() {
               id="password"
               name="password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="flex items-center justify-end">
@@ -95,10 +96,11 @@ export default function LoginForm() {
           </div>
           <button
             className="w-full justify-center py-1 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 rounded-md text-white ring-2 cursor-pointer"
-            id="login"
+            id="login"  
             name="login"
             type="submit"
             disabled={loading}
+            onClick={handleSubmit}
           >
             {loading ? "loading..." : "login"}
           </button>
